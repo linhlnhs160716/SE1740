@@ -1,17 +1,200 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keyword" content="teddy, gau bong, gấu">
+    <meta name="Description" content=" Đây là shop bán gấu">
+    <title>Teddy Bear Shop</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+      .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
         
-        
-    </body>
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+      
+      .sidebar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        color: #F3F90E;
+      }
+      
+      .sidebar a:hover {
+        color: #FFFFFF;
+      }
+      
+      .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+      
+      .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #8E7FA7;
+        color: white;
+        padding: 10px;
+        border: none;
+      }
+      
+      .openbtn:hover {
+        background-color: #C096B8;
+      }
+      
+      #main {
+        transition: margin-left .5s;
+        padding: 10px;
+        margin-left: 300px;
+      }
+      
+      /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+      @media screen and (max-height: 450px) {
+        .sidebar {padding-top: 15px;}
+        .sidebar a {font-size: 18px;}
+      }
+      </style>
+</head>
+
+<body>
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="#">Home</a>
+    <a href="#">Thú bông</a>
+    <a href="#">Hình trái cây</a>
+    <a href="#">Gối mền</a>
+    <a href="#">Gấu ôm dài</a>
+    <a href="#">Gấu size to</a>
+    <a href="#">Gấu size nhỏ</a>
+  </div>
+  
+    
+  <div class="header">
+    
+    <div class="header_logo">
+      <a href="index.html"><img src="Product/logo.jpg"></a>
+      <p> Teddy Bear Shop</p>
+    </div>
+  
+  
+    <div class="header_search">
+      <form>
+      <input type="text" placeholder="Gấu bông">
+      <button class="search" type="submit">Search</button>
+      </form>
+  
+    </div>
+  
+    <div class="header_menu">
+      <div id="main">
+        <button class="openbtn" onclick="openNav()">☰ Menu</button>  
+      </div>
+    </div>
+    
+  </div> 
+
+  <div class="banner">
+    <img src="Product/banner.jpg" alt="đây là banner">
+  </div>
+
+  <div class="small_img">
+
+    <div class="pic_1">
+      <img src="Product/set1.png" alt="pic 1">
+      <p>GIAO HÀNG TẬN NHÀ</p>
+    </div>
+
+    <div class="pic">
+      <img src="Product/set2.png" alt="pic 1">
+      <p>BỌC QUÀ MIỄN PHÍ</p>
+    </div>
+
+    <div class="pic">
+      <img src="Product/set3.png" alt="pic 1">
+      <p>TẶNG KÈM THIỆP</p>
+    </div>
+
+    <div class="pic">
+      <img src="Product/set4.png" alt="pic 1">
+      <p>GIẶT GẤU BÔNG</p>
+    </div>
+
+    <div class="pic">
+      <img src="Product/set5.png" alt="pic 1">
+      <p>ÉP CHÂN KHÔNG</p>
+    </div>
+
+  </div>
+    
+
+    <div class="content">
+      <div class="container">
+        <h2>BỘ SƯU TẬP GẤU BÔNG BÁN CHẠY NHẤT</h2>
+        <div class="product-list1">
+          <div class="product">
+            <img src="Product/chuoivit.jpeg" alt="Gấu bông 1">
+            <h3>Vịt chuối</h3>
+            <p>Giá: 200.000</p>
+            <div class="buy">Thêm vào giỏ</div>
+          </div>
+          <div class="product">
+            <img src="Product/heo.jpg" alt="Gấu bông 2">
+            <h3>Heo mập</h3>
+            <p>Giá: 300.000</p>
+            <div class="buy">Thêm vào giỏ</div>
+          </div>
+          <div class="product">
+            <img src="Product/shiba.jpg" alt="Gấu bông 3">
+            <h3>Chó du côn</h3>
+            <p>Giá: 400.000</p>
+            <div class="buy">Thêm vào giỏ</div>
+          </div>
+          
+        </div>
+
+        <div class="product-list2">
+          <div class="product">
+            <img src="Product/pikache.jpg" alt="Gấu bông 4">
+            <h3>Pi ka chê</h3>
+            <p>Giá: 350.000</p>
+            <div class="buy">Thêm vào giỏ</div>
+          </div>
+          <div class="product">
+            <img src="Product/gaudau.jpg" alt="Gấu bông 5">
+            <h3>Gấu dâu </h3>
+            <p>Giá: 250.000</p>
+            <div class="buy">Thêm vào giỏ</div>
+          </div>
+          <div class="product">
+            <img src="Product/tramzn.jpg" alt="Gấu bông 3">
+            <h3>Gấu buồn</h3>
+            <p>Giá: 380.000</p>
+            <div class="buy">Thêm vào giỏ</div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <footer class="footer">
+        <p>Bản quyền &copy; Lê Ngọc Linh HS160716</p>
+        <p> Email: Linhchuoi212@gmail.com</p>
+      </footer>
+</body>
 </html>
+
+
