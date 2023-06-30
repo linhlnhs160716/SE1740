@@ -4,19 +4,22 @@
  */
 package controller;
 
-import jakarta.servlet.ServletConfig;
+import dao.AccountDAO;
+import entity.Accounts;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author datng
+ * @author DUNG PC
  */
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SignUpController", urlPatterns = {"/signup"})
+public class SignUpController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,19 +35,15 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-//Get data from HTML form  
-            String u = request.getParameter("user");
-            String p = request.getParameter("pass");
-            //Get data from XML
-            ServletConfig sc = getServletConfig();
-            String user=sc.getInitParameter("username");
-            String pass = sc.getInitParameter("password");
-            if (user.equals(u)&&pass.equals(p)) {
-                response.sendRedirect("WelcomeSevlet");
-            } else {
-                response.sendRedirect("Login.html");
-                //request.getRequestDispatcher("login.html").include(request, response);
-            }
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SignUpController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -74,7 +73,16 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        Accounts accounts = new Accounts();
+        accounts.setEmail(email);
+        accounts.setPassword(password);
+        
+        AccountDAO dao = new AccountDAO();
+        dao.Register(accounts);
+        response.sendRedirect("index.html");
     }
 
     /**
