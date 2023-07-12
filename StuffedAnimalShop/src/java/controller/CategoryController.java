@@ -5,23 +5,26 @@
  */
 package controller;
 
-import dal.AcountDBContext;
+
+import dal.CategoryDBContext;
+import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
+import model.Category;
+import model.Product;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "SignupController", urlPatterns = {"/signup"})
-public class SignupController extends HttpServlet {
+@WebServlet(name = "CategoryController", urlPatterns = {"/category"})
+public class CategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +38,14 @@ public class SignupController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String repass = request.getParameter("repass");
-        if (!pass.equals(repass)) {
-            request.setAttribute("mess", "Pass not match!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 
-            AcountDBContext adb = new AcountDBContext();
-            Account a = adb.checkAccountExist(user);
-            if (a == null) {
-                Account b = new Account();
-                b.setUser(user);
-                b.setPass(pass);
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", b);
-                adb.insertAccount(user, pass);
-                response.sendRedirect("home");
-            } else {
-                request.setAttribute("mess", "Account Exist!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        }
-
+        List<Product> listProducts = new ProductDBContext().getProductsByCategoryId(categoryId);
+        List<Category> listCategories = new CategoryDBContext().getAllCategories();
+        request.setAttribute("listCategories", listCategories);
+        request.setAttribute("listProducts", listProducts);
+        request.setAttribute("tag", categoryId);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,6 +5,7 @@
  */
 package controller;
 
+
 import dal.AcountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +21,8 @@ import model.Account;
  *
  * @author Admin
  */
-@WebServlet(name = "SignupController", urlPatterns = {"/signup"})
-public class SignupController extends HttpServlet {
+@WebServlet(name = "LoginController", urlPatterns = {"/login"})
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +36,22 @@ public class SignupController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String repass = request.getParameter("repass");
-        if (!pass.equals(repass)) {
-            request.setAttribute("mess", "Pass not match!");
+        String user = request.getParameter("Username");
+        String pass = request.getParameter("Password");
+        AcountDBContext adb = new AcountDBContext();
+        Account a = adb.login(user, pass);
+        if (a==null) {
+            request.setAttribute("mess", "Wrong user or pass");
+            request.getRequestDispatcher("login.jsp").forward(request, response);           
+        }else if (a.isActive()== false) {
+            request.setAttribute("mess", "Account has been banned");
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-
-            AcountDBContext adb = new AcountDBContext();
-            Account a = adb.checkAccountExist(user);
-            if (a == null) {
-                Account b = new Account();
-                b.setUser(user);
-                b.setPass(pass);
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", b);
-                adb.insertAccount(user, pass);
-                response.sendRedirect("home");
-            } else {
-                request.setAttribute("mess", "Account Exist!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+        }else{
+            HttpSession session = request.getSession();
+            session.setAttribute("acc", a);
+            response.sendRedirect("home");
         }
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

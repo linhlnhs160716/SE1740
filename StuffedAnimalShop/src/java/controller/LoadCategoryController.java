@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,7 +6,9 @@
  */
 package controller;
 
+
 import dal.AcountDBContext;
+import dal.CategoryDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +16,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Account;
+import model.Category;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "SignupController", urlPatterns = {"/signup"})
-public class SignupController extends HttpServlet {
+@WebServlet(name = "LoadCategoryController", urlPatterns = {"/loadCategory"})
+public class LoadCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +38,13 @@ public class SignupController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String repass = request.getParameter("repass");
-        if (!pass.equals(repass)) {
-            request.setAttribute("mess", "Pass not match!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-
-            AcountDBContext adb = new AcountDBContext();
-            Account a = adb.checkAccountExist(user);
-            if (a == null) {
-                Account b = new Account();
-                b.setUser(user);
-                b.setPass(pass);
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", b);
-                adb.insertAccount(user, pass);
-                response.sendRedirect("home");
-            } else {
-                request.setAttribute("mess", "Account Exist!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String cid = request.getParameter("cid");
+            Category category = new CategoryDBContext().getCategoryById(Integer.parseInt(cid));
+            request.setAttribute("category", category);
+            request.getRequestDispatcher("EditCategory.jsp").forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

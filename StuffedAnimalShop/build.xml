@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="StuffedAnimalShop" default="default" basedir=".">
-    <description>Builds, tests, and runs the project StuffedAnimalShop.</description>
+<project name="ASSGN_PRJ_WEB_Ban_Gau_Bong" default="default" basedir=".">
+    <description>Builds, tests, and runs the project ASSGN_PRJ_WEB_Ban_Gau_Bong.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 

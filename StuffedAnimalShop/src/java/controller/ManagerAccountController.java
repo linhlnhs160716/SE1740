@@ -8,20 +8,21 @@ package controller;
 import dal.AcountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Account;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "SignupController", urlPatterns = {"/signup"})
-public class SignupController extends HttpServlet {
+@WebServlet(name = "ManagerAccountController", urlPatterns = {"/managerAccount"})
+public class ManagerAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,31 +36,13 @@ public class SignupController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String repass = request.getParameter("repass");
-        if (!pass.equals(repass)) {
-            request.setAttribute("mess", "Pass not match!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-
-            AcountDBContext adb = new AcountDBContext();
-            Account a = adb.checkAccountExist(user);
-            if (a == null) {
-                Account b = new Account();
-                b.setUser(user);
-                b.setPass(pass);
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", b);
-                adb.insertAccount(user, pass);
-                response.sendRedirect("home");
-            } else {
-                request.setAttribute("mess", "Account Exist!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        }
-
+        AcountDBContext adb = new AcountDBContext();
+        List<Account> accounts = adb.getAllAccount();
+        request.setAttribute("accounts",accounts);
+        request.getRequestDispatcher("ManagerCustomer.jsp").forward(request, response);
+        
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
